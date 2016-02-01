@@ -66,6 +66,11 @@ namespace ICSharpCode.ILSpy
 		public SessionSettings SessionSettings {
 			get { return sessionSettings; }
 		}
+
+		public SharpTreeView TreeView
+		{
+			get { return treeView; }
+		}
 		
 		public MainWindow()
 		{
