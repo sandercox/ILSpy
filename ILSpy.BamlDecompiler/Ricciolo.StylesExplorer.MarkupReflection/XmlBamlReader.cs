@@ -652,7 +652,10 @@ namespace Ricciolo.StylesExplorer.MarkupReflection
 					localName = ((XmlBamlElement)node).TypeDeclaration.Name;
 
 				localName = this.NameTable.Add(localName);
-
+                if (localName.Contains('+'))
+                {
+                    return localName.Replace('+', '_');
+                }
 				return localName;
 			}
 		}
