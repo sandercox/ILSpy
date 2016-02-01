@@ -157,6 +157,7 @@ namespace ICSharpCode.ILSpy
 		
 		void InitMainMenu()
 		{
+			KeyGestureConverter kgc = new KeyGestureConverter();
 			foreach (var topLevelMenu in mainMenuCommands.OrderBy(c => c.Metadata.MenuOrder).GroupBy(c => c.Metadata.Menu)) {
 				var topLevelMenuItem = mainMenu.Items.OfType<MenuItem>().FirstOrDefault(m => (m.Header as string) == topLevelMenu.Key);
 				foreach (var category in topLevelMenu.GroupBy(c => c.Metadata.MenuCategory)) {
@@ -182,6 +183,11 @@ namespace ICSharpCode.ILSpy
 						
 						menuItem.IsEnabled = entry.Metadata.IsEnabled;
 						menuItem.InputGestureText = entry.Metadata.InputGestureText;
+
+						if (!string.IsNullOrWhiteSpace(menuItem.InputGestureText))
+						{
+							this.InputBindings.Add(new InputBinding(menuItem.Command, kgc.ConvertFrom(menuItem.InputGestureText) as InputGesture));
+						}
 						topLevelMenuItem.Items.Add(menuItem);
 					}
 				}
